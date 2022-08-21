@@ -11,19 +11,11 @@ import {
 } from "@material-ui/core";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-const List = () => {
+const List = ({ places }) => {
   const classes = useStyles();
   const [elRefs, setElRefs] = useState([]);
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
-  const places = [
-    { name: "Cool Place" },
-    { name: "Best Beer" },
-    { name: "Best Steak" },
-    { name: "Cool Place" },
-    { name: "Best Beer" },
-    { name: "Best Steak" },
-  ];
 
   return (
     <div className={classes.container}>
