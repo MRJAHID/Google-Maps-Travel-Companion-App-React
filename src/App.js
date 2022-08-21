@@ -29,13 +29,20 @@ function App() {
     );
   }, []);
 
+  // Rating filtering
+  useEffect(() => {
+    const filteredPlaces = places.filter((place) => place.rating > rating);
+    setFilteredPlaces(filteredPlaces);
+  }, [rating]);
+
   useEffect(() => {
     setIsLoading(true);
-    getPlacesData(bounds.sw, bounds.ne).then((data) => {
+    getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
       setPlaces(data);
+      setFilteredPlaces([]);
       setIsLoading(false);
     });
-  }, [coords, bounds]);
+  }, [type, coords, bounds]);
 
   return (
     <>
