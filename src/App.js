@@ -31,18 +31,26 @@ function App() {
 
   // Rating filtering
   useEffect(() => {
-    const filteredPlaces = places.filter((place) => place.rating > rating);
-    setFilteredPlaces(filteredPlaces);
+    const filtered = places.filter((place) => place.rating > rating);
+    setFilteredPlaces(filtered);
   }, [rating]);
 
   useEffect(() => {
-    setIsLoading(true);
-    getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
-      setPlaces(data);
-      setFilteredPlaces([]);
-      setIsLoading(false);
-    });
-  }, [type, coords, bounds]);
+    if (bounds) {
+      setIsLoading(true);
+
+      setWeatherData(coords.lat, coords.lng).then((data) =>
+        setWeatherData(data)
+      );
+
+      getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
+        setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
+        setFilteredPlaces([]);
+        setRating("");
+        setIsLoading(false);
+      });
+    }
+  }, [bounds, type]);
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 
