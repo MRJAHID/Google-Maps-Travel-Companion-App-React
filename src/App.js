@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { CssBaseline, Grid } from "@material-ui/core";
+
+import { getPlacesData, getWeatherData } from "./Api";
 import Header from "./components/Header/Header";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
-import { CssBaseline, Grid } from "@material-ui/core";
-import { getPlacesData } from "./Api";
 
 function App() {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
 
   const [coords, setCoords] = useState({});
-  const [bounds, setBounds] = useState({});
+  const [bounds, setBounds] = useState(null);
 
   const [weatherData, setWeatherData] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -20,7 +21,6 @@ function App() {
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Get User Geo Location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
@@ -29,9 +29,9 @@ function App() {
     );
   }, []);
 
-  // Rating filtering
   useEffect(() => {
-    const filtered = places.filter((place) => place.rating > rating);
+    const filtered = places.filter((place) => Number(place.rating) > rating);
+
     setFilteredPlaces(filtered);
   }, [rating]);
 
@@ -39,7 +39,7 @@ function App() {
     if (bounds) {
       setIsLoading(true);
 
-      setWeatherData(coords.lat, coords.lng).then((data) =>
+      getWeatherData(coords.lat, coords.lng).then((data) =>
         setWeatherData(data)
       );
 
@@ -60,7 +60,6 @@ function App() {
 
     setCoords({ lat, lng });
   };
-
   return (
     <>
       <CssBaseline />
@@ -68,9 +67,8 @@ function App() {
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
-            places={places}
-            childClicked={childClicked}
             isLoading={isLoading}
+            childClicked={childClicked}
             places={filteredPlaces.length ? filteredPlaces : places}
             type={type}
             setType={setType}
@@ -78,7 +76,16 @@ function App() {
             setRating={setRating}
           />
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid
+          item
+          xs={12}
+          md={8}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Map
             setChildClicked={setChildClicked}
             setBounds={setBounds}

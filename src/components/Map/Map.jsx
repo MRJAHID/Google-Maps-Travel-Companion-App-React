@@ -1,10 +1,11 @@
 import React from "react";
-import useStyles from "./style.js";
+import GoogleMapReact from "google-map-react";
 import { Paper, Typography, useMediaQuery } from "@material-ui/core";
 import { LocationOnOutlined } from "@material-ui/icons";
-import GoogleMapReact from "google-map-react";
 import { Rating } from "@material-ui/lab";
+
 import mapStyles from "./mapStyles";
+import useStyles from "./style.js";
 
 const Map = ({
   coords,
@@ -20,7 +21,7 @@ const Map = ({
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
         defaultCenter={coords}
         center={coords}
         defaultZoom={14}
@@ -37,7 +38,7 @@ const Map = ({
         onChildClick={(child) => setChildClicked(child)}
       >
         {places.length &&
-          places?.map((place, i) => (
+          places.map((place, i) => (
             <div
               className={classes.markerContainer}
               lat={Number(place.latitude)}
@@ -53,6 +54,7 @@ const Map = ({
                     variant="subtitle2"
                     gutterBottom
                   >
+                    {" "}
                     {place.name}
                   </Typography>
                   <img

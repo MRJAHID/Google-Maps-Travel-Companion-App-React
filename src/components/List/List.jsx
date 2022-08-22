@@ -10,8 +10,7 @@ import {
 } from "@material-ui/core";
 
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
-
-import useStyles from "./styles.js";
+import useStyles from "./style.js";
 
 const List = ({
   places,

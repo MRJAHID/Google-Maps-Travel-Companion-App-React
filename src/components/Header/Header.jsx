@@ -1,8 +1,9 @@
-import useStyles from "./style.js";
 import React from "react";
 import { Autocomplete } from "@react-google-maps/api";
 import { AppBar, Toolbar, Typography, InputBase, Box } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+
+import useStyles from "./style.js";
 
 const Header = ({ onPlaceChanged, onLoad }) => {
   const classes = useStyles();
@@ -13,7 +14,7 @@ const Header = ({ onPlaceChanged, onLoad }) => {
         <Typography variant="h5" className={classes.title}>
           Travel Advisor
         </Typography>
-        <Box style={{ display: "flex" }}>
+        <Box display="flex">
           <Typography variant="h6" className={classes.title}>
             Explore new places
           </Typography>

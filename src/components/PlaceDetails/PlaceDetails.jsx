@@ -1,6 +1,4 @@
 import React from "react";
-import "./style.js";
-import useStyles from "./style.js";
 import {
   Card,
   Typography,
@@ -9,14 +7,17 @@ import {
   Box,
   Button,
   Chip,
+  CardActions,
 } from "@material-ui/core";
-// import { Rating } from "@material-ui/lab";
-import { LocationOn, PhoneIcon, Rating } from "@material-ui/icons";
+import { LocationOn, Phone } from "@material-ui/icons";
+import { Rating } from "@material-ui/lab";
+
+import useStyles from "./style.js";
 
 const PlaceDetails = ({ place, selected, refProp }) => {
-  const classes = useStyles();
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const classes = useStyles();
 
   return (
     <Card elevation={6}>
@@ -84,7 +85,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
             color="textSecondary"
             className={classes.spacing}
           >
-            <PhoneIcon /> {place.phone}
+            <Phone /> {place.phone}
           </Typography>
         )}
       </CardContent>
